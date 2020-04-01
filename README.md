@@ -10,4 +10,4 @@ How to create a simple map (with a marker and polygon) using OpenLayers 6
   - Test delivery area with polygon
   
 ### Image
-<img src=https://github.com/moovspace/map-openlayers/blob/master/map-marker-polygon-click.png" style="width: 100%;">
+<img src="https://github.com/moovspace/map-openlayers/blob/master/map-marker-polygon-click.png" style="width: 100%;">
