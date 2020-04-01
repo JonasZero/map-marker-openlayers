@@ -5,7 +5,6 @@
         <meta name=description content="">
         <meta name=viewport content="width=device-width, initial-scale=1">
         <title>Geocoding, location</title>
-        <link rel="stylesheet" href="https://openlayers.org/en/v4.4.2/css/ol.css" type="text/css">
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/css/ol.css" type="text/css">
         <style>
@@ -44,15 +43,15 @@
                 })
             ],
             view: new ol.View({
-                center: ol.proj.fromLonLat([21.013637, 52.271982]),
+                center: ol.proj.fromLonLat([21.002902, 52.228850]),
                 maxZoom: 18,
-                zoom: 2
+                zoom: 7
             })
         });
 
         // New element
         var IconFeauture = new ol.Feature({
-            geometry: new ol.geom.Point(ol.proj.fromLonLat([21.013637, 52.271982])),
+            geometry: new ol.geom.Point(ol.proj.fromLonLat([21.002902, 52.228850])),
             name: 'Some Icon'
         })
 
@@ -226,7 +225,7 @@
             return inside;
         };
 
-        if(TestDeliveryArea([21.013637, 52.271982], poly)){
+        if(TestDeliveryArea([21.002902, 52.228850], poly)){
             alert("Marker in area !!!");
         }
     </script>
