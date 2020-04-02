@@ -6,7 +6,7 @@ How to create a simple map (with a marker and polygon) using OpenLayers 6
   - Show map popup on click
   - Create marker on double click
   - Clear all layer markers on double click
-  - Create map polygon
+  - Create map polygon from points array
   - Test delivery area with polygon
   - Search location from address
   - Search address from location
