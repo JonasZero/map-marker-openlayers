@@ -1,7 +1,7 @@
 # OpenLayers 6 map
 How to create a simple map (with a marker and polygon) using OpenLayers 6
 
-### Map file include
+### Map file contains
   - Add marker to map
   - Show map popup on click
   - Create marker on double click
