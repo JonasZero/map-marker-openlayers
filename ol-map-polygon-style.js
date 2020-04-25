@@ -15,4 +15,4 @@ var style = new ol.style.Style({
         lineDash: [5,10]
     })
 });
-vectorLayer.setStyle(style);
+PolygonLayer.setStyle(style);

@@ -14,7 +14,7 @@ var PolygonSource = new ol.source.Vector();
 PolygonSource.addFeature(feature);
 
 // Create vector layer attached to the vector source.
-var vectorLayer = new ol.layer.Vector({
+var PolygonLayer = new ol.layer.Vector({
     source: PolygonSource
 });
 
@@ -30,13 +30,13 @@ var style = new ol.style.Style({
         lineDash: [3,6,9]
     })
 });
-vectorLayer.setStyle(style);
+PolygonLayer.setStyle(style);
 
 // Layer z-index
-vectorLayer.setZIndex(1);
+PolygonLayer.setZIndex(1);
 
 // Add the vector layer to the map.
-map.addLayer(vectorLayer);
+map.addLayer(PolygonLayer);
 
 // Test js point in poligon
 function TestDeliveryArea(point, vs)
