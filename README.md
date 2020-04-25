@@ -12,4 +12,4 @@ How to create a simple map (with a marker and polygon) using OpenLayers 6
   - Search address from location
   
 ### Image
-<img src="https://github.com/moovspace/map-openlayers/blob/master/map-marker-polygon-click.png" style="width: 100%;">
+<img src="https://github.com/moovspace/map-marker-openlayers/blob/master/img/map-marker-polygon-click.png" style="width: 100%;">
