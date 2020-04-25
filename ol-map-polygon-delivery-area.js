@@ -18,7 +18,23 @@ var vectorLayer = new ol.layer.Vector({
     source: PolygonSource
 });
 
-vectorLayer.setZIndex(0);
+// Polygon color
+var style = new ol.style.Style({
+    fill: new ol.style.Fill({
+        color: 'rgba(71, 166, 255, 0.1)',
+        weight: 1
+    }),
+    stroke: new ol.style.Stroke({
+        color: 'rgba(71, 166, 255, 1)',
+        width: 2,
+        lineDash: [3,6,9]
+    })
+});
+vectorLayer.setStyle(style);
+
+// Layer z-index
+vectorLayer.setZIndex(1);
+
 // Add the vector layer to the map.
 map.addLayer(vectorLayer);
 
