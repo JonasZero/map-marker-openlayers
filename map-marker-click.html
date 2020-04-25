@@ -22,7 +22,7 @@
     <script defer src="ol-map-polygon-delivery-area.js"></script>
 </head>
 <body>
-    <h1>OpenLayer - Set marker</h1>
+    <h1>OpenLayer - Set marker geolocation</h1>
     <p>Create new marker on double click. (Console: SHIFT + CTRL + K for errors)</p>
 
     <form>
@@ -33,8 +33,8 @@
         <!-- Location -->
         <label>Location lon, lat</label>
         <input type="text" id="location">
-        <br/>
-        <a onclick="getLatLngClick(this);" id="btn"> Get Data</a>
+
+        <a onclick="getLatLngClick(this);" id="btn"> Search</a>
     </form>
 
     <!-- Map div -->
@@ -47,5 +47,6 @@
     </div>
 
     <script type="text/javascript">
+
     </script>
 </body>
