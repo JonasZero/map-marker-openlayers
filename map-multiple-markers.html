@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .ol-tooltip *{
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 300
+        }
+        .ol-tooltip {
+            display: flex; overflow: hidden;
+        }
+        .ol-tooltip img {
+            float: left; padding: 5px;
+            width: 40px; height: 40px;
+        }
+        .ol-tooltip-job a{
+            font-size: 15px; padding: 2px;
+            text-decoration: none;
+            color: #0050b8;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        .ol-tooltip-job a:hover{
+            color: #c90083;
+        }
+        .ol-tooltip-salary{
+            font-size: 14px; padding: 2px;
+            white-space: nowrap;
+        }
+        .ol-tooltip-company{
+            font-size: 13px; padding: 2px;
+        }
+        .ol-popup {
+            position: absolute;
+            background-color: white;
+            filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #cccccc;
+            bottom: 12px;
+            width: 210px;
+            transform: translate(-50%, 0%);
+            margin-bottom: 10px;
+        }
+        .ol-popup:after, .ol-popup:before {
+            top: 100%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .ol-popup:after {
+            border-top-color: white;
+            border-width: 10px;
+            left: 120px;
+            margin-left: -16px;
+        }
+
+        .ol-popup:before {
+            border-top-color: #cccccc;
+            border-width: 11px;
+            left: 120px;
+            margin-left: -16px;
+        }
+        .marker{
+            background: #222 !important;
+        }
+        .animated {
+            position: relative;
+            -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+        }
+        .animated:hover {
+            -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+        }
+        @keyframes hop {
+            0% {margin-bottom: 0px;}
+            50% {margin-bottom: 30px;}
+            100% {margin-bottom: 0px;}
+        }
+        .hop {
+            -webkit-animation-name: hop;
+            animation-name: hop;
+            animation-iteration-count: infinite;
+            animation-duration: 2s;
+        }
+    </style>
+    <meta name="description" content="Display popup on features">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.5/ol.css"></link>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.5/ol.js"></script>
+
+    <script>
+        var straitSource;
+        var map;
+    </script>
+
+</head>
+
+<body>
+    <h1>OpenLayer - Multiple markers with popup</h1>
+
+    <div id="map"></div>
+    <!-- Popup hover -->
+    <div id="popup" class="ol-popup">
+        <a id="popup-closer" class="ol-popup-closer"></a>
+        <div id="popup-content"></div>
+    </div>
+    <!-- Popup click -->
+    <div id="popupClick" class="ol-popup">
+        <a id="popup-closer" class="ol-popup-closer"></a>
+        <div id="popup-content-click"></div>
+    </div>
+</body>
+
+<script>
+var center = ol.proj.transform([76.26, 9.93], 'EPSG:4326', 'EPSG:3857'); //initial position of map
+var view = new ol.View({
+    center: center,
+    zoom: 2
+});
+
+//raster layer on map
+var MapLayer = new ol.layer.Tile({
+    source: new ol.source.OSM()
+});
+
+straitSource = new ol.source.Vector({ wrapX: true });
+var straitsLayer = new ol.layer.Vector({
+    source: straitSource
+});
+
+map = new ol.Map({
+    layers: [MapLayer, straitsLayer],
+    target: 'map',
+    view: view,
+    controls: [new ol.control.FullScreen(), new ol.control.Zoom()]
+});
+
+// Popup showing the position the hovered marker
+var container = document.getElementById('popup');
+var popup = new ol.Overlay({
+    element: container,
+    autoPan: true,
+    autoPanAnimation: {
+        duration: 250
+    }
+});
+map.addOverlay(popup);
+
+// Popup showing the position the user clicked
+var containerClick = document.getElementById('popupClick');
+var popupClick = new ol.Overlay({
+    element: containerClick,
+    autoPan: true,
+    autoPanAnimation: {
+        duration: 250
+    }
+});
+map.addOverlay(popupClick);
+
+/*
+    Popup part
+*/
+var content = document.getElementById('popup-content');
+var contentClick = document.getElementById('popup-content-click');
+var selected = null;
+
+// Hover popup
+map.on('pointermove', function (evt) {
+    var feature = map.forEachFeatureAtPixel(evt.pixel, function (feat, layer) {
+        return feat;
+    });
+    // console.log("Selected: ", selected, feature);
+    if(selected != feature)
+    {
+        if (feature && feature.get('type') == 'Point')
+        {
+            // var coordinate = evt.coordinate;    //default projection is EPSG:3857 you may want to use ol.proj.transform
+            // popup.setPosition(coordinate);
+            var postion = ol.proj.transform([feature.get('lon'),feature.get('lat')], 'EPSG:4326', 'EPSG:3857');
+            content.innerHTML = feature.get('desc');
+            popup.setPosition(postion);
+        }
+        else {
+            popup.setPosition(undefined);
+
+        }
+    }
+});
+
+// Click popup
+map.on('click', function (evt) {
+    var feature = map.forEachFeatureAtPixel(evt.pixel, function (feat, layer) {
+        selected = feat;
+        return feat;
+    });
+    // console.log("Selected: ", selected, feature);
+    if (feature && feature.get('type') == 'Point')
+    {
+        // Event coordinates
+        // var coordinate = evt.coordinate;
+        // popup.setPosition(coordinate);
+        // Lat lng coordinate
+        var postion = ol.proj.transform([feature.get('lon'),feature.get('lat')], 'EPSG:4326', 'EPSG:3857');
+        contentClick.innerHTML = feature.get('desc');
+        popupClick.setPosition(postion);
+    }
+    else {
+        selected = null;
+        popupClick.setPosition(undefined);
+
+    }
+});
+
+// Popup content
+function ToolTip(desc)
+{
+    return '<div class="ol-tooltip">'+
+        '<img src="'+desc.img+'">' +
+        '<div class="info">'+
+            '<div class="ol-tooltip-job"> <a href="'+desc.link+'"> '+desc.job+' </a> </div>'+
+            '<div class="ol-tooltip-salary">'+desc.salary+'</div>'+
+            '<div class="ol-tooltip-company">'+desc.name+'</div>'+
+        '</div>'+
+    '</div>';
+}
+
+// Data from database here :)
+var data = [{"Lon":19.423771205611732,"Lat":52.312306306284796, "Desc": {"icon": "img/icons/icon-cpp.png", "img": "img/icons/icon-star.png", "link": "http://woo.xx", "name": "Microsoft Sp.z.o.o", "salary": "6K - 15k PLN", "job": "Backend Developer"}},{"Lon":138.83696330321376,"Lat":34.82803186343469, "Desc": {"icon": "img/icons/icon-js.png", "img": "img/icons/icon-star.png", "link": "http://woo.xx", "name": "ALiance Forever Sp.z.o.o", "salary": "9K - 15k PLN", "job": "Js Developer"}},{"Lon":-40.44607585856028,"Lat":-7.328655246981256, "Desc": {"icon": "img/icons/icon-coin.png", "img": "img/icons/icon-coin.png", "link": "http://woo.xx", "name": "FunnyG Sp.z.o.o", "salary": "11K - 15k PLN", "job": "Bitcoin Developer"}},{"Lon":-83.26297726701098,"Lat":32.452601633323226, "Desc": {"icon": "img/icons/icon-php.png", "img": "img/icons/icon-star.png", "link": "http://woo.xx", "name": "Comercial Zoo Sp.z.o.o", "salary": "7000 - 9000 PLN", "job": "Php Developer"}},{"Lon":-120.9344508712306,"Lat":37.2251403205222, "Desc": {"icon": "img/icons/icon-def.png", "img": "img/icons/icon-star.png", "link": "http://woo.xx", "name": "Google Sp.z.o.o", "salary": "15000 - 25000 PLN", "job": "UI Designer"}},{"Lon":-61.77952129376579,"Lat":53.652271089831004, "Desc": {"icon": "img/icons/icon-net.png", "img": "img/icons/icon-star.png", "link": "http://woo.xx", "name": "Facebook Sp.z.o.o", "salary": "17000 - 35000 PLN", "job": "UI Designer"}},{"Lon":-2.6245917163009893,"Lat":51.94948976542784, "Desc": {"icon": "img/icons/icon-html.png", "img": "img/icons/icon-star.png", "link": "http://woo.xx", "name": "MoovSpace Sp.z.o.o", "salary": "7000 - 25000 PLN", "job": "UI Designer"}},{"Lon":19.423771205611732,"Lat":52.312306306284796, "Desc": {"icon": "img/icons/icon-js.png", "img": "img/icons/icon-star.png", "link": "http://woo.xx", "name": "MoovSpace Sp.z.o.o", "salary": "9000- 15000 PLN", "job": "Full Stack Developer"}}];
+
+// Create markers function
+// icon.imageDiv.className += "name"
+function addPointGeom(data) {
+    data.forEach(function(item) { //iterate through array...
+
+        var longitude = item.Lon, latitude = item.Lat, desc = item.Desc;
+
+        var MarkerIcon = new ol.style.Icon({
+            anchor: [0.5, 50],
+            anchorXUnits: 'fraction',
+            anchorYUnits: 'pixels',
+            src: desc.icon
+            ,scale: 0.5
+        });
+        // MarkerIcon.imageDiv.className += "marker-class";
+        MarkerIcon.b.M.className = "animated hop";
+        // MarkerIcon.b.M.style = "margin-bottom: 20px !important;";
+        // console.log("ICON " , MarkerIcon.b.M);
+        var iconFeature = new ol.Feature({
+            geometry: new ol.geom.Point(ol.proj.transform([longitude, latitude], 'EPSG:4326', 'EPSG:3857')),
+            type: 'Point',
+            desc: ToolTip(desc),
+            lon: longitude,
+            lat: latitude
+            // desc: '<pre> <b>Waypoint Details </b> ' + '<br>' + 'Latitude : ' + latitude + '<br>Longitude: ' + longitude + '</pre>'
+        }),
+        iconStyle = new ol.style.Style({
+            image: MarkerIcon
+        });
+        iconFeature.setStyle(iconStyle);
+        straitSource.addFeature(iconFeature);
+    });
+}
+
+// Add markers now
+addPointGeom(data);
+</script>
+</html>
