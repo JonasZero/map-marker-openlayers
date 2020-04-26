@@ -13,6 +13,12 @@ var style = new ol.style.Style({
         color: LineColor,
         width: 2,
         lineDash: [5,10]
+    }),
+    image: new ol.style.Circle({
+        radius: 5,
+        fill: new ol.style.Fill({
+            color: '#f30'
+        })
     })
 });
 PolygonLayer.setStyle(style);
