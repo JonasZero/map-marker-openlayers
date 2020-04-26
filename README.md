@@ -10,5 +10,9 @@ OpenLayers map marker with popup. Create marker on double click. Map delivery ar
   - Test delivery area with polygon
   - Search location from address (geolocation)
   
-### Image
+### Map marker
 <img src="https://github.com/moovspace/map-marker-openlayers/blob/master/img/map-marker-polygon-click.png" style="width: 100%;">
+
+### Delivery area with polygon
+Create, load or edit polygon sample. Load polygon in json format. Download polygon file.
+<img src="https://github.com/moovspace/map-marker-openlayers/blob/master/img/map-polygon.png" style="width: 100%;">
