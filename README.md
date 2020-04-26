@@ -17,3 +17,7 @@ https://github.com/moovspace/map-marker-openlayers/blob/master/map-marker-click.
 ### Delivery area with polygon
 Create, load or edit polygon sample. Load polygon in json format. Download polygon file. https://github.com/moovspace/map-marker-openlayers/blob/master/map-polygon.html
 <img src="https://github.com/moovspace/map-marker-openlayers/blob/master/img/map-polygon.png" style="width: 100%;">
+
+### Map multipe markers
+Multiple markers with popups from array or database. https://github.com/moovspace/map-marker-openlayers/blob/master/map-multiple-markers.html
+<img src="https://raw.githubusercontent.com/moovspace/map-marker-openlayers/master/img/map-marker-multi.png" style="width: 100%;">
