@@ -48,6 +48,7 @@ var selected = null;
 // Hover popup
 map.on('pointermove', function (evt)
 {
+    var last = null;
     var feature = map.forEachFeatureAtPixel(evt.pixel, function (feat, layer) {
         return feat;
     });
@@ -60,11 +61,19 @@ map.on('pointermove', function (evt)
             // Lon Lat coordinates
             var postion = ol.proj.transform([feature.get('lon'),feature.get('lat')], 'EPSG:4326', 'EPSG:3857');
             content.innerHTML = feature.get('desc');
+            // Show marker on top
+            MarkerOnTop(feature, true);
+            // Show popup
             popup.setPosition(postion);
         }
     }
     else
     {
+        straitSource.getFeatures().forEach((f) => {
+            // Hide markers zindex 999
+            MarkerOnTop(f, false);
+        });
+        // Hide popup
         popup.setPosition(undefined);
     }
 
@@ -84,14 +93,35 @@ map.on('click', function (evt)
         // Lon Lat coordinates
         var postion = ol.proj.transform([feature.get('lon'),feature.get('lat')], 'EPSG:4326', 'EPSG:3857');
         contentClick.innerHTML = feature.get('desc');
+        // Show marker on top
+        MarkerOnTop(feature, true);
+        // Show Popup
         popupClick.setPosition(postion);
     }
     else
     {
         selected = null;
+         // Hide markers zindex 999
+        straitSource.getFeatures().forEach((f) => {
+            MarkerOnTop(f, false);
+        });
         popupClick.setPosition(undefined);
     }
 });
+
+// Show marker on top
+function MarkerOnTop(feature, show = false)
+{
+    var style = feature.getStyle();
+    if(show){
+        style.zIndex = 9999;
+        style.zIndex_ = 9999;
+    }else{
+        style.zIndex = 999;
+        style.zIndex_ = 999;
+    }
+    feature.setStyle(style);
+}
 
 // Popup content
 function ToolTip(desc)

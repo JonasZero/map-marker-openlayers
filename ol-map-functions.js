@@ -2,6 +2,7 @@
     Functions
     https://nominatim.openstreetmap.org/search?q=Warszaw&format=json
 */
+
 // Get address from location
 function ReverseGeocoding(lon, lat) {
     fetch('https://nominatim.openstreetmap.org/reverse?format=json&lon=' + lon + '&lat=' + lat).then(function(response) {
@@ -125,4 +126,55 @@ function PopUp(lon, lat)
         closer.blur();
         return false;
     };
+}
+
+// Show marker
+function MarkerOnTop(feature, show = false)
+{
+    var style = feature.getStyle();
+    if(show){
+        style.zIndex = 9999;
+        style.zIndex_ = 9999;
+    }else{
+        style.zIndex = 999;
+        style.zIndex_ = 999;
+    }
+    console.log(style);
+    feature.setStyle(style);
+}
+
+// Animate marker from faeture
+function AnimatePoint(feature, distance = 10000, speed = 400)
+{
+    console.log("Geometry: ", feature.getGeometry().getCoordinates());
+    // var point = new ol.geom.Point(ol.proj.fromLonLat([evt.lon, evt.lat]));
+    // Coordinates
+    var c = feature.getGeometry().getCoordinates();
+    var start = c[1];
+    var end = start + distance;
+    var curr = start;
+    var up = true;
+
+    window.setInterval(() => {
+        if(up == true)
+        {
+            curr = curr + speed;
+            var pos = [c[0], curr];
+            // console.log("Current: ", pos);
+            feature.getGeometry().setCoordinates(pos);
+            if(curr > end)
+            {
+                up = false;
+            }
+        }else{
+            curr = curr - speed;
+            var pos = [c[0], curr];
+            // console.log("Current: ", pos);
+            feature.getGeometry().setCoordinates(pos);
+            if(curr < start)
+            {
+                up = true;
+            }
+        }
+    }, 35);
 }
