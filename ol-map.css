@@ -61,7 +61,9 @@ form #btn:hover{
     left: 48px;
     margin-left: -11px;
 }
-
+.ol-tooltip{
+    margin-bottom: 5px; border-bottom: 1px solid #333
+}
 .animated {
     -webkit-animation-duration: 1s;
     animation-duration: 1s;

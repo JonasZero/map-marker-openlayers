@@ -48,7 +48,10 @@ map.on('dblclick', function(evt)
     // Add to source
     MapSource.addFeature(f);
 
-    // Set div
+    // Animate marker position
+    AnimatePoint(f);
+
+    // Set div coordinates
     SetDivLonLat(coordinate[0].toFixed(6), coordinate[1].toFixed(6));
 
     // Get lon, lat
