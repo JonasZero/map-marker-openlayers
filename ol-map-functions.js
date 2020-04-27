@@ -144,7 +144,7 @@ function MarkerOnTop(feature, show = false)
 }
 
 // Animate marker from faeture
-function AnimatePoint(feature, distance = 10000, speed = 400)
+function AnimatePoint(feature, distance = 50, speed = 5)
 {
     console.log("Geometry: ", feature.getGeometry().getCoordinates());
     // var point = new ol.geom.Point(ol.proj.fromLonLat([evt.lon, evt.lat]));
