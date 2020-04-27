@@ -123,10 +123,7 @@ function addPointGeom(data) {
             src: desc.icon
             ,scale: 0.5
         });
-        // MarkerIcon.imageDiv.className += "marker-class";
-        // MarkerIcon.b.M.className = "animated hop";
-        // MarkerIcon.b.M.style = "margin-bottom: 20px !important;";
-        // console.log("ICON " , MarkerIcon.b.M);
+
         var iconFeature = new ol.Feature({
             geometry: new ol.geom.Point(ol.proj.transform([longitude, latitude], 'EPSG:4326', 'EPSG:3857')),
             type: 'Point',
