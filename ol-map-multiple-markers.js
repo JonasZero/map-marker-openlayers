@@ -46,17 +46,18 @@ var contentClick = document.getElementById('popup-content-click');
 var selected = null;
 
 // Hover popup
-map.on('pointermove', function (evt) {
+map.on('pointermove', function (evt)
+{
     var feature = map.forEachFeatureAtPixel(evt.pixel, function (feat, layer) {
         return feat;
     });
-    // if (feature && feature.get('type') == 'Point')
     if (map.hasFeatureAtPixel(evt.pixel) === true)
     {
         if(selected != feature)
         {
-            // var coordinate = evt.coordinate;
-            // popup.setPosition(coordinate);
+            // Event coordinates
+            // popup.setPosition(evt.coordinate);
+            // Lon Lat coordinates
             var postion = ol.proj.transform([feature.get('lon'),feature.get('lat')], 'EPSG:4326', 'EPSG:3857');
             content.innerHTML = feature.get('desc');
             popup.setPosition(postion);
@@ -70,18 +71,17 @@ map.on('pointermove', function (evt) {
 });
 
 // Click popup
-map.on('click', function (evt) {
+map.on('click', function (evt)
+{
     var feature = map.forEachFeatureAtPixel(evt.pixel, function (feat, layer) {
         selected = feat;
         return feat;
     });
-    // if (feature && feature.get('type') == 'Point')
     if (map.hasFeatureAtPixel(evt.pixel) === true)
     {
         // Event coordinates
-        // var coordinate = evt.coordinate;
-        // popup.setPosition(coordinate);
-        // Lat lng coordinate
+        // popup.setPosition(evt.coordinate);
+        // Lon Lat coordinates
         var postion = ol.proj.transform([feature.get('lon'),feature.get('lat')], 'EPSG:4326', 'EPSG:3857');
         contentClick.innerHTML = feature.get('desc');
         popupClick.setPosition(postion);
