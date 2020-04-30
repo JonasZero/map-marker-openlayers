@@ -38,7 +38,10 @@ PolygonLayer.setZIndex(1);
 // Add the vector layer to the map.
 map.addLayer(PolygonLayer);
 
-// Test js point in poligon
+
+/*
+    Test js point in poligon
+*/
 function TestDeliveryArea(point, vs)
 {
     var x = point[0], y = point[1];
@@ -58,3 +61,19 @@ if(TestDeliveryArea([21.002902, 52.228850], poly))
 {
     console.log("Marker in delivery area (polygon) !!!");
 }
+
+/*
+    Is coordinate in polygon
+    var coordinate = [1,2]
+    var polygon_points_array = [[20.57, 53.30], [21.24, 53.30], [22.152810, 52.648142], [21.24, 52], [20.50, 52], [19.785212, 52.783446]];
+*/
+function PointInPolygon(polygon_points_array, coordinate)
+{
+    var polygon = new ol.geom.Polygon([polygon_points_array]);
+    var out = polygon.intersectsCoordinate(coordinate);
+
+    console.log("Polygon in area: ", out);
+    return out;
+}
+
+PointInPolygon(poly, [21.002902, 52.22885]);
