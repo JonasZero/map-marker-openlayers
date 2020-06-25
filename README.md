@@ -39,7 +39,7 @@ height: 400px;
 }
 ```
 
-### Test is location in polygon
+### Check if point(coordinates) is inside a polygon
 ```js
 /*
     Test delivery area coordinates
