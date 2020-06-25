@@ -28,3 +28,13 @@ Create, load or edit polygon sample. Load polygon in json format. Download polyg
 ### Map multipe markers
 Multiple markers with popups from array or database. https://github.com/moovspace/map-marker-openlayers/blob/master/map-multiple-markers.html
 <img src="https://raw.githubusercontent.com/moovspace/map-marker-openlayers/master/img/map-marker-multi.png" style="width: 100%;">
+
+# Important!
+Map style height 
+```css
+map{
+float: left; 
+width: 100%;
+height: 400px;
+}
+```
