@@ -38,3 +38,18 @@ width: 100%;
 height: 400px;
 }
 ```
+
+### Test is location in polygon
+```js
+/*
+    Test delivery area coordinates
+    var coordinate = [21.002902, 52.22885]
+    var polygon_points = [[20.57, 53.30], [21.24, 53.30], [22.152810, 52.648142], [21.24, 52], [20.50, 52], [19.785212, 52.783446]];
+*/
+function PointInPolygon(coordinate, polygon_points_array)
+{
+    var polygon = new ol.geom.Polygon([polygon_points_array]);
+    var out = polygon.intersectsCoordinate(coordinate);
+    return out;
+}
+```
