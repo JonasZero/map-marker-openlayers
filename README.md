@@ -1,9 +1,6 @@
 # OpenLayers map marker (ver. 6)
 OpenLayers map marker with popup. Create marker with geolocation or double click. Delivery area with polygon. Multiple markers with html popups. Animated markers.
 
-#### Working examples 
-https://moovspace.github.io/ol-map
-
 ### Map file contains
   - Add image marker to map
   - Show map popup on click
@@ -53,7 +50,3 @@ function PointInPolygon(coordinate, polygon_points_array)
     return out;
 }
 ```
-
-### Small version
-Create marker, polygon
-https://github.com/MoovFun/awesome-map-marker
